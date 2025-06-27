@@ -1,0 +1,25 @@
+[package]
+name = "web-service-count-axum"
+version = "1.1.0"
+edition = "2024"
+authors = ["Joel Parker Henderson <joel@joelparkerhenderson.com>"]
+license = "GPL-2.0 OR GPL-3.0"
+homepage = "https://github.com/joelparkerhenderson/web-service-count-axum"
+repository = "https://github.com/joelparkerhenderson/web-service-count-axum"
+documentation = "https://github.com/joelparkerhenderson/web-service-count-axum"
+
+description = """
+Web service that displays the hit count by using Axum, Tokio, Rust. The purpose of this is simple testing of our systems.
+"""
+
+readme = "README.md"
+keywords = ["demo", "rust", "test", "axum", "web"]
+categories = ["web-programming"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = { version = "~0.8.4" } # Web framework that focuses on ergonomics and modularity.
+tokio = { version = "~1.45.1", features = ["full"] } # Event-driven, non-blocking I/O platform.
+tracing = { version = "~0.1.41" } #  Application-level tracing for Rust.
+tracing-subscriber = { version = "~0.3.19", features = ["env-filter"] } # Utilities for `tracing` subscribers.

@@ -1,0 +1,84 @@
+# Crate Documentation
+
+**Version:** 1.1.0
+
+**Format Version:** 43
+
+# Module `web_service_count_axum`
+
+# Web service count axum
+ 
+**[documentation](https://docs.rs/web-service-count-axum/)**
+•
+**[source](https://github.com/joelparkerhenderson/web-service-count-axum/)**
+•
+**[llms.txt](https://raw.githubusercontent.com/joelparkerhenderson/web-service-count-axum/refs/heads/main/llms.txt)**
+•
+**[crate](https://crates.io/crates/web-service-count-axum)**
+•
+**[email](mailto:joel@joelparkerhenderson.com)**
+
+Web service that displays the hit count by using Axum, Tokio, Rust.
+ 
+This is a very simple web service that we use for testing our systems.
+ 
+## Steps
+ 
+Run the service on host 0.0.0.0 port 3000 or wherever you wish:
+ 
+```sh
+cargo run -- "0.0.0.0:3000"
+```
+ 
+Browse <https://localhost:3000>
+ 
+You should see a web page that displays the hit count.
+ 
+## References
+ 
+Based on Demo Rust Axum free open source software:
+<https://github.com/joelparkerhenderson/demo-rust-axum>
+ 
+
+## Functions
+
+### Function `main`
+
+```rust
+pub(crate) fn main() { /* ... */ }
+```
+
+### Function `shutdown_signal`
+
+```rust
+pub async fn shutdown_signal() { /* ... */ }
+```
+
+### Function `fallback`
+
+axum handler for any request that fails to match the router routes.
+This implementation returns HTTP status code Not Found (404).
+
+```rust
+pub async fn fallback(uri: axum::http::Uri) -> impl axum::response::IntoResponse { /* ... */ }
+```
+
+### Function `count`
+
+axum handler for "GET /count" which shows the program's count duration.
+This shows how to write a handler that uses a global static lazy value.
+
+```rust
+pub async fn count() -> String { /* ... */ }
+```
+
+## Constants and Statics
+
+### Static `COUNT`
+
+Create the atomic variable COUNT so the program can track its own count.
+
+```rust
+pub static COUNT: std::sync::atomic::AtomicUsize = _;
+```
+
