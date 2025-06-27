@@ -1,8 +1,8 @@
 # Crate Documentation
 
-**Version:** 1.1.0
+**Version:** 1.2.0
 
-**Format Version:** 43
+**Format Version:** 45
 
 # Module `web_service_count_axum`
 
