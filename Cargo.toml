@@ -1,6 +1,6 @@
 [package]
 name = "web-service-count-axum"
-version = "1.1.0"
+version = "1.2.0"
 edition = "2024"
 authors = ["Joel Parker Henderson <joel@joelparkerhenderson.com>"]
 license = "GPL-2.0 OR GPL-3.0"
@@ -23,3 +23,12 @@ axum = { version = "~0.8.4" } # Web framework that focuses on ergonomics and mod
 tokio = { version = "~1.45.1", features = ["full"] } # Event-driven, non-blocking I/O platform.
 tracing = { version = "~0.1.41" } #  Application-level tracing for Rust.
 tracing-subscriber = { version = "~0.3.19", features = ["env-filter"] } # Utilities for `tracing` subscribers.
+
+[dev-dependencies]
+cargo-dist = { git = "https://github.com/astral-sh/cargo-dist" }
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
+
