@@ -25,7 +25,8 @@ tracing = { version = "~0.1.41" } #  Application-level tracing for Rust.
 tracing-subscriber = { version = "~0.3.19", features = ["env-filter"] } # Utilities for `tracing` subscribers.
 
 [dev-dependencies]
-cargo-dist = { git = "https://github.com/astral-sh/cargo-dist" }
+axum-test = { version = "17.3.0" } # Library for writing tests for web servers written using Axum.
+cargo-dist = { git = "https://github.com/astral-sh/cargo-dist" } # Shippable application packaging.
 
 # The profile that 'dist' will build with
 [profile.dist]
