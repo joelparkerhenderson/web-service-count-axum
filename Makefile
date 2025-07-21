@@ -1,3 +1,5 @@
+top = $(shell git rev-parse --show-toplevel)
+
 default: llms cargo-build-release
 
 ##
@@ -27,3 +29,11 @@ cargo-build-release:
 	git add --force target/x86_64-unknown-linux-gnu/release/web-service-count-axum
 	TARGET_CC=x86_64-unknown-linux-musl cargo build --release --target x86_64-unknown-linux-musl
 	git add --force target/x86_64-unknown-linux-musl/release/web-service-count-axum
+
+##
+# podman-build: Use podman to build the container.
+##
+.PHONY: podman-build
+podman-build:
+	#podman machine start
+	podman build -t web-service-count-axum "${top}"
