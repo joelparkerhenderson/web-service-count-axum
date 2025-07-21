@@ -5,7 +5,7 @@ use axum::routing::get;
 pub fn app() -> axum::Router {
     axum::Router::new()
         .fallback(fallback)
-        .route("/", get(count))
+        .route("/count", get(count))
 }
 
 /// axum handler for any request that fails to match the router routes.
@@ -17,7 +17,7 @@ pub async fn fallback(uri: axum::http::Uri) -> impl axum::response::IntoResponse
 /// Create the atomic variable COUNT so the program can track its own count.
 pub static COUNT: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
 
-/// axum handler for "GET /" which shows the program's count duration.
+/// axum handler for "GET /count" which shows the program's count duration.
 /// This shows how to write a handler that uses a global static lazy value.
 pub async fn count() -> String {
     COUNT.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
@@ -33,8 +33,8 @@ mod tests {
     async fn test() {
         let app: axum::Router = app();
         let server = TestServer::new(app).unwrap();
-        let response_text_0 = server.get("/").await.text();
-        let response_text_1 = server.get("/").await.text();
+        let response_text_0 = server.get("/count").await.text();
+        let response_text_1 = server.get("/count").await.text();
         assert!(response_text_0 < response_text_1, "{} < {}", response_text_0, response_text_1);
     }
 
