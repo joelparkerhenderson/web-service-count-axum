@@ -16,15 +16,34 @@ This is a very simple web service that we use for testing our systems.
 
 ## Steps
 
-Run the service on host 0.0.0.0 port 3000 or wherever you wish:
+Run the service using the default address 0.0.0.0:8080:
 
 ```sh
-cargo run -- "0.0.0.0:3000"
+cargo run
 ```
 
-Browse <https://localhost:3000>
+Browse <https://localhost:8080/count>
 
 You should see a web page that displays the hit count.
+
+Use your browser to reload the web page.
+
+You should see the hit count increase by one.
+
+## Options
+
+Run the service using a command line option for a custom address:
+
+```sh
+cargo run -- "1.2.3.4:5678"
+```
+
+Run the service using an environment variable for a custom address:
+
+```sh
+export ADDRESS="1.2.3.4:5678"
+cargo run
+```
 
 ## References
 
