@@ -5,7 +5,7 @@ use axum::routing::get;
 pub fn app() -> axum::Router {
     axum::Router::new()
         .fallback(fallback)
-        .route("/", get(count))
+        .route("/count", get(count))
 }
 
 /// axum handler for any request that fails to match the router routes.
@@ -33,8 +33,8 @@ mod tests {
     async fn test() {
         let app: axum::Router = app();
         let server = TestServer::new(app).unwrap();
-        let response_text_0 = server.get("/").await.text();
-        let response_text_1 = server.get("/").await.text();
+        let response_text_0 = server.get("/count").await.text();
+        let response_text_1 = server.get("/count").await.text();
         assert!(response_text_0 < response_text_1, "{} < {}", response_text_0, response_text_1);
     }
 
