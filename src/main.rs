@@ -32,15 +32,18 @@
 //!
 //! ## Options
 //!
-//! Run the service using a command line option for a custom address:
+//! Run the service using an environment variable for a custom bind address:
 //!
 //! ```sh
-//! cargo run -- "1.2.3.4:5678"
+//! export BIND="1.1.1.1:1111"
+//! cargo run
 //! ```
 //!
-//! Run the service using an environment variable for a custom address:
+//! Run the service using environment variables for a custom host and port:
+//!
 //! ```sh
-//! export ADDRESS="1.2.3.4:5678"
+//! export HOST="1.1.1.1"
+//! export PORT="1111"
 //! cargo run
 //! ```
 //!
@@ -51,6 +54,7 @@
 //!
 
 mod app;
+mod conf;
 
 /// Use tracing crates for application-level tracing output.
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
@@ -68,52 +72,13 @@ async fn main() {
         .init();
     tracing::event!(tracing::Level::INFO, "main");
 
-    // Get command line arguments.
-    let args: Vec<String> = std::env::args().skip(1).collect();
-
-    // Use the first arg for tokio::net::TcpListener::bind(…),
-    // or then env var ADDRESS, or default "0.0.0.0:8080".
-    let bind_address_string = match args.get(0) {
-        Some(x) => x.clone(),
-        None => match std::env::var("ADDRESS") {
-            Ok(address) => address,
-            Err(_e) => "0.0.0.0:8080".into()
-        }
-    };
-
     // Create our application which is an axum router.
     let app = crate::app::app();
 
     // Run our application as a hyper server.
-    let listener = tokio::net::TcpListener::bind(bind_address_string).await.unwrap();
+    let listener = tokio::net::TcpListener::bind(crate::conf::bind_string().await).await.unwrap();
     axum::serve(listener, app)
-        .with_graceful_shutdown(shutdown_signal())
+        .with_graceful_shutdown(crate::conf::shutdown_signal())
         .await
         .unwrap();
-}
-
-/// Shutdown signal to run axum with graceful shutdown when
-/// a user presses Ctrl+C or Unix sends a terminate signal.
-pub async fn shutdown_signal() {
-    let ctrl_c = async {
-        tokio::signal::ctrl_c()
-            .await
-            .expect("failed to install Ctrl+C handler");
-    };
-
-    #[cfg(unix)]
-    let terminate = async {
-        tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
-            .expect("failed to install signal handler")
-            .recv()
-            .await;
-    };
-
-    #[cfg(not(unix))]
-    let terminate = std::future::pending::<()>();
-
-    tokio::select! {
-        _ = ctrl_c => {},
-        _ = terminate => {},
-    }
 }
