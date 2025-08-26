@@ -1,6 +1,6 @@
 [package]
 name = "web-service-count-axum"
-version = "1.5.0"
+version = "1.5.1"
 edition = "2024"
 authors = ["Joel Parker Henderson <joel@joelparkerhenderson.com>"]
 license = "GPL-2.0 OR GPL-3.0"
