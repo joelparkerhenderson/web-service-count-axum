@@ -1,0 +1,13 @@
+[Unit]
+Description=Web service count axum
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=centos
+ExecStart=PORT=10001 /opt/web-service-count-axum/target/release/web-service-count-axum
+
+[Install]
+WantedBy=multi-user.target
